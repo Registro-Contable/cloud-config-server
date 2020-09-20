@@ -5,7 +5,23 @@ spring:
     config:
       server:
         git:
-          uri: file:///C:/Users/victor\RegistroContableConfigRepo
+          uri: https://github.com/Registro-Contable/configuration-repository.git
+          repos:
+            local:
+              uri: ${user.home}/RegistroContableConfigRepo
+              pattern:
+                - '*/local'
+              default-label: develop
+            development:
+              uri: https://github.com/Registro-Contable/configuration-repository.git
+              pattern:
+                - '*/development'
+                - '*/staging'
+            staging:
+              pattern:
+                - '*/qa'
+                - '*/production'
+              uri: https://github.com/Registro-Contable/configuration-repository.git
     
 server:
   port: 8888
