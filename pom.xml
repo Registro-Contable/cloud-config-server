@@ -14,6 +14,7 @@
 	<groupId>com.victorlh.registrocontable</groupId>
 	<artifactId>cloud-config-server</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
+
 	<name>registrocontable-cloud-config-server</name>
 	<description>Servidor de configuración distribuida</description>
 
