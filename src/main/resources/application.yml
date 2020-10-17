@@ -17,6 +17,7 @@ spring:
               pattern:
                 - '*/development'
                 - '*/staging'
+              default-label: develop
             staging:
               pattern:
                 - '*/qa'
