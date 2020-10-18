@@ -13,13 +13,15 @@
 
 	<groupId>com.victorlh.registrocontable</groupId>
 	<artifactId>cloud-config-server</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<version>0.0.4-SNAPSHOT</version>
+
 	<name>registrocontable-cloud-config-server</name>
 	<description>Servidor de configuración distribuida</description>
 
 	<properties>
 		<java.version>14</java.version>
 		<spring-cloud.version>Hoxton.SR8</spring-cloud.version>
+		<git.repository>Registro-Contable/cloud-config-server</git.repository>
 	</properties>
 
 	<dependencies>
@@ -64,8 +66,24 @@
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
+				<configuration>
+					<tagNameFormat>@{project.version}</tagNameFormat>
+				</configuration>
 			</plugin>
 		</plugins>
 	</build>
+
+	<scm>
+		<developerConnection>scm:git:https://github.com/${git.repository}.git</developerConnection>
+		<url>https://github.com/${git.repository}</url>
+	</scm>
+
+	<distributionManagement>
+		<repository>
+			<id>github</id>
+			<name>GitHub</name>
+			<url>https://maven.pkg.github.com/${git.repository}</url>
+		</repository>
+	</distributionManagement>
 
 </project>
