@@ -1,4 +1,4 @@
-name: Test workflow
+name: Maven Test workflow
 
 on:
   pull_request:
