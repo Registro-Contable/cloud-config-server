@@ -3,7 +3,7 @@ name: Maven Test workflow
 on:
   pull_request:
     branches:
-      - 'test'
+      - 'master'
 
 jobs:
   test:
