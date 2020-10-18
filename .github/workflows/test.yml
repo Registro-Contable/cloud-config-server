@@ -31,5 +31,9 @@ jobs:
         uses: actions/setup-java@v1
         with:
           java-version: 14
+      - name: Configure Git user
+        run: |
+          git config user.email "actions@github.com"
+          git config user.name "GitHub Actions"
       - name: Publish artifact on GitHub Packages
         run: mvn -B release:prepare release:perform
