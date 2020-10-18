@@ -1,7 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 
 	<parent>
@@ -13,7 +11,7 @@
 
 	<groupId>com.victorlh.registrocontable</groupId>
 	<artifactId>cloud-config-server</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<version>0.0.1</version>
 
 	<name>registrocontable-cloud-config-server</name>
 	<description>Servidor de configuración distribuida</description>
@@ -22,7 +20,8 @@
 		<connection>scm:git:git@github.com:Registro-Contable/cloud-config-server.git</connection>
 		<developerConnection>scm:git:git@github.com:Registro-Contable/cloud-config-server.git</developerConnection>
 		<url>https://github.com/Registro-Contable/cloud-config-server</url>
-	</scm>
+	  <tag>cloud-config-server-0.0.1</tag>
+  </scm>
 
 	<properties>
 		<java.version>14</java.version>
