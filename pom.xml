@@ -18,15 +18,10 @@
 	<name>registrocontable-cloud-config-server</name>
 	<description>Servidor de configuración distribuida</description>
 
-	<scm>
-		<connection>scm:git:git@github.com:Registro-Contable/cloud-config-server.git</connection>
-		<developerConnection>scm:git:git@github.com:Registro-Contable/cloud-config-server.git</developerConnection>
-		<url>https://github.com/Registro-Contable/cloud-config-server</url>
-	</scm>
-
 	<properties>
 		<java.version>14</java.version>
 		<spring-cloud.version>Hoxton.SR8</spring-cloud.version>
+		<git.repository>Registro-Contable/cloud-config-server</git.repository>
 	</properties>
 
 	<dependencies>
@@ -74,5 +69,18 @@
 			</plugin>
 		</plugins>
 	</build>
+	
+	<scm>
+		<developerConnection>https://github.com/${git.repository}.git</developerConnection>
+		<url>https://github.com/${git.repository}</url>
+	</scm>
+	
+	<distributionManagement>
+		<repository>
+			<id>github</id>
+			<name>GitHub</name>
+			<url>https://maven.pkg.github.com/${git.repository}</url>
+		</repository>
+	</distributionManagement>
 
 </project>
