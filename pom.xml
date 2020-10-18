@@ -13,7 +13,7 @@
 
 	<groupId>com.victorlh.registrocontable</groupId>
 	<artifactId>cloud-config-server</artifactId>
-	<version>0.0.3-SNAPSHOT</version>
+	<version>0.0.4-SNAPSHOT</version>
 
 	<name>registrocontable-cloud-config-server</name>
 	<description>Servidor de configuración distribuida</description>
@@ -66,6 +66,9 @@
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
+				<configuration>
+					<tagNameFormat>@{project.version}</tagNameFormat>
+				</configuration>
 			</plugin>
 		</plugins>
 	</build>
