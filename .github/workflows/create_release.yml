@@ -22,7 +22,7 @@ jobs:
         id: prep
         run: |
           VERSION=$(mvn help:evaluate -Dexpression=project.version -q -DforceStdout)
-          echo ::set-output name=version::${VERSION}
+          echo ${VERSION}
 #      - name: Create release with Maven
 #        run: mvn -B release:branch
 #        env:
