@@ -18,6 +18,10 @@ jobs:
         with:
           java-version: 14
 #          server-id: github
+      - name: Configure Git user
+        run: |
+          git config user.email "actions@github.com"
+          git config user.name "GitHub Actions"
       - name: Prepare
         id: prep
         run: |
