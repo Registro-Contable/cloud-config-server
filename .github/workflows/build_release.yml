@@ -21,10 +21,23 @@ jobs:
         run: |
           git config user.email "actions@github.com"
           git config user.name "GitHub Actions"
+      - name: Prepare
+        id: prep
+        run: |
+          VERSION=$(mvn help:evaluate -Dexpression=project.version -q -DforceStdout')
+          echo ::set-output name=version::${VERSION}
       - name: Publish artifact on GitHub Packages
         run: mvn -B clean deploy -DskipTests
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Create Release tag
+        id: create_release
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: v${{ steps.prep.outputs.version }}
+          release_name: Release v${{ steps.prep.outputs.version }}
           
   docker:
     name: Publish docker - DockerHub Packages
@@ -41,16 +54,13 @@ jobs:
       - name: Prepare
         id: prep
         run: |
-          VERSION=noop
-          if [[ $GITHUB_REF == refs/tags/* ]]; then
-            VERSION=${GITHUB_REF#refs/tags/}
-          fi
+          VERSION=$(mvn help:evaluate -Dexpression=project.version -q -DforceStdout')
           echo ::set-output name=version::${VERSION}
-#      - name: Build artifact with maven
-#        run: mvn -B clean package -DskipTests
-#      - name: Login to Docker Hub
-#        run: docker login -u ${{ secrets.DOCKER_USER }} -p ${{ secrets.DOCKER_PASS }}
-#      - name: Build Docker image
-#        run: docker build -t $REPO:latest -t $REPO:${GITHUB_SHA::8} .
-#      - name: Publish Docker image
-#        run: docker push $REPO
+      - name: Build artifact with maven
+        run: mvn -B clean package -DskipTests
+      - name: Login to Docker Hub
+        run: docker login -u ${{ secrets.DOCKER_USER }} -p ${{ secrets.DOCKER_PASS }}
+      - name: Build Docker image
+        run: docker build -t $REPO:latest -t $REPO:${{ steps.prep.outputs.version }} .
+      - name: Publish Docker image
+        run: docker push $REPO
