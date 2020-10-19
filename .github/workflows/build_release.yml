@@ -24,7 +24,7 @@ jobs:
       - name: Prepare
         id: prep
         run: |
-          VERSION=$(mvn help:evaluate -Dexpression=project.version -q -DforceStdout')
+          VERSION=$(mvn help:evaluate -Dexpression=project.version -q -DforceStdout)
           echo ::set-output name=version::${VERSION}
       - name: Publish artifact on GitHub Packages
         run: mvn -B clean deploy -DskipTests
@@ -54,7 +54,7 @@ jobs:
       - name: Prepare
         id: prep
         run: |
-          VERSION=$(mvn help:evaluate -Dexpression=project.version -q -DforceStdout')
+          VERSION=$(mvn help:evaluate -Dexpression=project.version -q -DforceStdout)
           echo ::set-output name=version::${VERSION}
       - name: Build artifact with maven
         run: mvn -B clean package -DskipTests
