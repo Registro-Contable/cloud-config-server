@@ -21,9 +21,9 @@ jobs:
       - name: Prepare
         id: prep
         run: |
-          VERSION=$(mvn help:evaluate -Dexpression=project.version -q -DforceStdout)
-          echo ${VERSION}
-#      - name: Create release with Maven
-#        run: mvn -B release:branch
-#        env:
-#          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          VERSION=$(mvn help:evaluate -Dexpression=project.version -q -DforceStdout | sed 's/-SNAPSHOT//')
+          echo ::set-output name=version::${VERSION}
+      - name: Creat release with Maven
+        run: mvn -B release:branch -DbranchName=release/${{ steps.prep.outputs.version }}
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
