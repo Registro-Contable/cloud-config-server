@@ -24,7 +24,9 @@ jobs:
       - name: Prepare
         id: prep
         run: |
+          ARTIFACT=$(mvn help:evaluate -Dexpression=project.artifactId -q -DforceStdout)
           VERSION=$(mvn help:evaluate -Dexpression=project.version -q -DforceStdout)
+          echo ::set-output name=artifact::${ARTIFACT}
           echo ::set-output name=version::${VERSION}
       - name: Publish artifact on GitHub Packages
         run: mvn -B clean deploy -DskipTests
@@ -43,7 +45,7 @@ jobs:
     name: Publish docker - DockerHub Packages
     runs-on: ubuntu-latest
     env:
-      REPO: registrocontable/cloud-config-server
+      REPO: registrocontable
 
     steps:
       - uses: actions/checkout@v2
@@ -54,13 +56,15 @@ jobs:
       - name: Prepare
         id: prep
         run: |
+          ARTIFACT=$(mvn help:evaluate -Dexpression=project.artifactId -q -DforceStdout)
           VERSION=$(mvn help:evaluate -Dexpression=project.version -q -DforceStdout)
+          echo ::set-output name=artifact::${ARTIFACT}
           echo ::set-output name=version::${VERSION}
       - name: Build artifact with maven
         run: mvn -B clean package -DskipTests
       - name: Login to Docker Hub
         run: docker login -u ${{ secrets.DOCKER_USER }} -p ${{ secrets.DOCKER_PASS }}
       - name: Build Docker image
-        run: docker build -t $REPO:latest -t $REPO:${{ steps.prep.outputs.version }} .
+        run: docker build -t $REPO/${{ steps.prep.outputs.artifact }}:latest -t $REPO/${{ steps.prep.outputs.artifact }}:${{ steps.prep.outputs.version }} .
       - name: Publish Docker image
         run: docker push $REPO
