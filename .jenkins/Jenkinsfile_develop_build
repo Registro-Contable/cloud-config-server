@@ -17,36 +17,47 @@ pipeline {
 
     stages {
         stage('pre-run') {
+            steps {
+                cleanWs()
+            }
+        }
+        stage('checkout') {
+            steps {
+                git branch: "${BRANCH}", credentialsId: "${CREDENTIALS_GITHUB}", url: "${GIT_REPO}"
+            }
+        }
+        stage('init-var') {
+            steps{
+                script{
+                    VERSION = sh(script: 'mvn help:evaluate -Dexpression=project.version -q -DforceStdout', returnStdout: true).trim()
+                }
+            }                
+        }
+        stage('validate-test') {
+            steps {
+                sh "mvn -B clean verify"
+            }
+        }
+        stage('build-artifacts') {
+            steps {
+                sh "mvn -B clean deploy -DskipTests -Dmaven.test.failure.ignore=true"
+            }
+        }
+        stage('build-docker') {
             environment {
                 VERSION = sh(script: 'mvn help:evaluate -Dexpression=project.version -q -DforceStdout', returnStdout: true).trim()
             }
             steps {
-                cleanWs()
-                echo "${VERSION}"
+                sh "docker build -t ${DOCKER_NAME}:${VERSION} ."
             }
         }
-//         stage('checkout') {
-//             steps {
-//                 git branch: "${BRANCH}", credentialsId: "${CREDENTIALS_GITHUB}", url: "${GIT_REPO}"
-//             }
-//         }
-//         stage('validate-test') {
-//             steps {
-//                 sh "mvn -B clean verify"
-//             }
-//         }
-//         stage('build-artifacts') {
-//             steps {
-//                 sh "mvn -B clean deploy -DskipTests -Dmaven.test.failure.ignore=true"
-//             }
-//         }
-//         stage('build-docker') {
-//             environment {
-//     asd = "asd"
-//   }
-//             steps {
-//                 sh "docker build -t ${DOCKER_NAME}:latest -t $REPO/${{ steps.prep.outputs.artifact }}:${{ steps.prep.outputs.version }} ."
-//             }
-//         }
+        // stage('build-docker') {
+        //     environment {
+        //         VERSION = sh(script: 'mvn help:evaluate -Dexpression=project.version -q -DforceStdout', returnStdout: true).trim()
+        //     }
+        //     steps {
+        //         sh "docker build -t ${DOCKER_NAME}:${VERSION} ."
+        //     }
+        // }
     }
 }
