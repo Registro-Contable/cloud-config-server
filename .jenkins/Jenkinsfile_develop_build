@@ -41,9 +41,8 @@ pipeline {
         stage('build-artifacts') {
             steps {
                 configFileProvider([configFile(fileId: 'a7295949-125b-4521-97ab-e3b633a850c2', variable: 'MAVEN_SETTINGS')]) {
-                    sh "mvn -B clean deploy -DskipTests -Dmaven.test.failure.ignore=true -s $MAVEN_SETTINGS"
+                    sh "mvn -s $MAVEN_SETTINGS -B clean deploy -DskipTests -Dmaven.test.failure.ignore=true"
                 }
-                
             }
         }
         stage('build-docker') {
