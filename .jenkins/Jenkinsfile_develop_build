@@ -40,7 +40,7 @@ pipeline {
         }
         stage('build-artifacts') {
             steps {
-                configFileProvider([configFile(fileId: 'maven-settings', variable: 'MAVEN_SETTINGS')]) {
+                configFileProvider([configFile(fileId: 'a7295949-125b-4521-97ab-e3b633a850c2', variable: 'MAVEN_SETTINGS')]) {
                     sh "mvn -B clean deploy -DskipTests -Dmaven.test.failure.ignore=true -s $MAVEN_SETTINGS"
                 }
                 
