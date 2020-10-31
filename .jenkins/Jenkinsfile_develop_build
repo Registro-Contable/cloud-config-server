@@ -40,7 +40,7 @@ pipeline {
         }
         stage('build-artifacts') {
             steps {
-                sh "mvn -B clean deploy -DskipTests -Dmaven.test.failure.ignore=true"
+                sh "mvn -B clean package -DskipTests -Dmaven.test.failure.ignore=true"
             }
         }
         stage('build-docker') {
