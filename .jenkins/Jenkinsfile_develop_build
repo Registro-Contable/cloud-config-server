@@ -9,9 +9,9 @@ pipeline {
         NAME = "cloud-config-server"
         GIT_REPO = "https://github.com/Registro-Contable/${NAME}"
         BRANCH = "develop"
-        CREDENTIALS_GITHUB = "Jenkins-token"
 
         DOCKER_NAME = "registro-contable/${NAME}"
+        // DOCKER_REPO = "192.168.1.5:8081"
     }
 
 
@@ -40,7 +40,10 @@ pipeline {
         }
         stage('build-artifacts') {
             steps {
-                sh "mvn -B clean package -DskipTests -Dmaven.test.failure.ignore=true"
+                configFileProvider([configFile(fileId: 'maven-settings', variable: 'MAVEN_SETTINGS')]) {
+                    sh "mvn -B clean deploy -DskipTests -Dmaven.test.failure.ignore=true -s $MAVEN_SETTINGS"
+                }
+                
             }
         }
         stage('build-docker') {
@@ -51,12 +54,12 @@ pipeline {
                 sh "docker build -t ${DOCKER_NAME}:${VERSION} ."
             }
         }
-        // stage('build-docker') {
-        //     environment {
-        //         VERSION = sh(script: 'mvn help:evaluate -Dexpression=project.version -q -DforceStdout', returnStdout: true).trim()
-        //     }
+        // stage('push-docker') {
         //     steps {
-        //         sh "docker build -t ${DOCKER_NAME}:${VERSION} ."
+        //         withCredentials([[$class: 'UsernamePasswordMultiBinding', credentialsId: "${CREDENTIALS_NEXUS}", usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD']]) {
+        //             sh "docker login -u ${USERNAME} -p ${PASSWORD} ${DOCKER_REPO}"
+        //         }
+                
         //     }
         // }
     }
