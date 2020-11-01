@@ -1,0 +1,7 @@
+version: "3.8"
+
+services:
+  cloud-config-server:
+    image: "registro-contable/cloud-config-server:${TAG}"
+    ports:
+      - "8888:8888"

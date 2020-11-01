@@ -7,11 +7,11 @@ spring:
         git:
           uri: https://github.com/Registro-Contable/configuration-repository.git
           repos:
-            local:
-              uri: ${user.home}/RegistroContableConfigRepo
-              pattern:
-                - '*/local'
-              default-label: develop
+#            local:
+#              uri: ${user.home}/RegistroContableConfigRepo
+#              pattern:
+#                - '*/local'
+#              default-label: develop
             development:
               uri: https://github.com/Registro-Contable/configuration-repository.git
               pattern:

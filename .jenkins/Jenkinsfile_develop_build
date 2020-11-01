@@ -46,11 +46,13 @@ pipeline {
             }
         }
         stage('build-docker') {
-            environment {
-                VERSION = sh(script: 'mvn help:evaluate -Dexpression=project.version -q -DforceStdout', returnStdout: true).trim()
-            }
             steps {
                 sh "docker build -t ${DOCKER_NAME}:${VERSION} ."
+            }
+        }
+        stage('run-docker') {
+            steps {
+                sh "docker-compose up -d -e TAG=${VERSION}"
             }
         }
         // stage('push-docker') {
