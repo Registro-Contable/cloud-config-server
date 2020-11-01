@@ -52,7 +52,8 @@ pipeline {
         }
         stage('run-docker') {
             steps {
-                sh "docker-compose up -d -e TAG=${VERSION}"
+                sh "echo TAG=${VERSION} > docker-compose.env"
+                sh "docker-compose up -d --env-file docker-compose.env"
             }
         }
         // stage('push-docker') {
